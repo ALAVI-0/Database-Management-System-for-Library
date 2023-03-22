@@ -1,0 +1,48 @@
+select * from users;
+select * from books;
+select * from stuffs;
+select * from publishers;
+select * from category;
+select * from authority;
+select * from borrowed_by;
+
+**********1*********simple--
+Q: Show name, address and salary of stuffs:
+select s_name,s_add,s_salary from stuffs;
+********3***********simple--
+Q:  find the annual salary of stuffs in descending order:
+select s_name,s_salary*12 from stuffs order by s_name desc
+********5***********simple--
+Q:  find the age of stuffs whose have a salary of more than 44000 tk & less than 50000 tk: 
+select s_age from stuffs where s_salary<50000  and  s_salary>44000
+********4***********subquery--
+Q: find the books name list whose publishers name starts with ‘K’ :
+select b_title from books where p_id in(select p_id from publishers where p_name like 'K%')
+*********2**********join--
+Q: FIND the stuffs who are working under ‘lilly jean’ :
+select s_name from stuffs,authority where stuffs.a_id=authority.a_id and authority.a_name='LILLY JEAN' 
+********6*********** join--
+Q: Return all borrowers with their book name who have a fine more than 500 tk :
+select u.u_name,bb.b_id,b.b_title from users u,borrowed_by bb,books b where bb.b_id=b.b_id and bb.u_id=u.u_id and bb.fine>500
+********7**********join--
+Q: show all categories and books names :
+select c.c_name,b.b_title from category c,books b where c.c_id=b.c_id
+********8**********join--
+Q: show all the names and fined amount of borrowers:
+select u.u_name,b.fine from users u,borrowed_by b where u.u_id=b.u_id
+********9*********join--
+Q: show the user name and due date :
+select u.u_name,b.due_date from users u,borrowed_by b where u.u_id=b.u_id
+
+********10********join
+Q: show user name,fine amount, book id of user of EEE depertment & books of ‘electrical circuit’:
+select u.u_name,bb.fine,b.b_id from borrowed_by bb,users u,books b where bb.u_id=u.u_id and bb.b_id=b.b_id and b.b_title='ELECTRICAL CIRCUIT' and u.u_dept='EEE'
+
+
+VIEW***********************
+CREATE VIEW USER01 AS SELECT U_ID,U_NAME,U_ADD,U_DEPT,U_CON,U_AGE FROM USERS WHERE U_ID=15308973;
+
+SELECT U_ID,U_NAME,U_ADD,U_DEPT,U_CON,U_AGE FROM USER01
+
+
+

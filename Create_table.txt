@@ -1,0 +1,159 @@
+drop table users;
+drop table books;
+drop table stuffs;
+drop table publishers;
+drop table category;
+drop table authority;
+drop table borrowed_by;
+
+desc users;
+desc books;
+desc stuffs;
+desc publishers;
+desc category;
+desc authority;
+desc borrowed_by;
+
+select * from users;
+select * from books;
+select * from stuffs;
+select * from publishers;
+select * from category;
+select * from authority;
+select * from borrowed_by;
+ 
+create table users(
+u_id number(10) not null,
+u_name varchar2(25),
+u_add varchar2(25),
+u_dept varchar2(10),
+u_con number(11),
+u_age number(3),
+b_id number(10)
+);
+
+alter table users add (constraint u_id_pk primary key(u_id));
+alter table users add (constraint b_id_fk foreign key(b_id) references books(b_id));
+
+create table books(
+b_id number(10) not null,
+b_title varchar2(25),
+b_copy number(3),
+c_id number(10),
+p_id number(10)
+);
+
+alter table books add(constraint b_id_pk primary key(b_id));
+alter table books add(
+constraint p_id_fk foreign key(p_id)references publishers(p_id),
+constraint c_id_fk foreign key(c_id)references category(c_id)
+);
+
+create table stuffs(
+s_id number(10) not null,
+s_name varchar2(25),
+s_add varchar2(25),
+s_age number(3),
+s_salary number(5),
+s_con number(11),
+u_id number(10),
+a_id number(10)
+);
+
+alter table stuffs add(constraint s_id_pk primary key(s_id));
+alter table stuffs add(
+constraint u_id_fk foreign key(u_id) references users(u_id),
+constraint a_id_fk foreign key(a_id) references authority(a_id)
+);
+
+create table publishers(
+p_id number(10) not null,
+p_add varchar2(25),
+p_name varchar2(25)
+);
+
+alter table publishers add(constraint p_id_pk primary key(p_id));
+
+create table category(
+c_id number(10) not null,
+c_name varchar2(25)
+);
+
+alter table category add(constraint c_id_pk primary key(c_id));
+
+create table authority(
+a_id number(10) not null,
+a_name varchar2(25)
+); 
+
+alter table authority add(constraint a_id_pk primary key(a_id));
+
+create table borrowed_by(
+u_id number(10) not null,
+b_id number(10) not null,
+r_date date,
+i_date date,
+due_date date,
+fine number(5)
+);
+
+alter table borrowed_by add(
+constraint u_id2_fk foreign key(u_id) references users(u_id),
+constraint b_id2_fk foreign key(b_id) references books(b_id)
+);
+
+*****************************INSERT
+
+insert into users(
+u_id,u_name,u_add,u_dept,u_con,u_age,b_id)values(15308973,'MD.SAIDUZZAMAN_TALUKDER','Dhaka','CSE',01681736508,20,981305)
+insert into users(
+u_id,u_name,u_add,u_dept,u_con,u_age,b_id)values(15308974,'MD.OSMAN_GONI','Dhaka','EEE',01681560008,21,122106)
+insert into users(
+u_id,u_name,u_add,u_dept,u_con,u_age,b_id)values(15308975,'ALAVI_SHARAR_KHAN','Dhaka','CSE',01681752008,19,541236)
+
+insert into books(
+b_id,b_title,b_copy,c_id,p_id)values(981305,'PRINCIPLES OF ECONOMICS',50,322,201)
+insert into books(
+b_id,b_title,b_copy,c_id,p_id)values(122106,'ELECTRICAL CIRCUIT',30,412,203)
+insert into books(
+b_id,b_title,b_copy,c_id,p_id)values(541236,'PHYSICS 2',40,129,202)
+
+insert into stuffs(
+s_id,s_name,s_add,s_age,s_salary,s_con,u_id,a_id)values(1,'TAMIM KHAN','Dhaka',45,50000,01912654723,15308973,1)
+insert into stuffs(
+s_id,s_name,s_add,s_age,s_salary,s_con,u_id,a_id)values(2,'SHAMIM HASAN','Dhaka',32,46000,01914554723,15308974,2)
+insert into stuffs(
+s_id,s_name,s_add,s_age,s_salary,s_con,u_id,a_id)values(3,'ASHIQ ALAM','Dhaka',41,44000,01912654823,15308975,3)
+
+insert into publishers(
+p_id,p_add,p_name)values(201,'Dhaka','KB PUBLISHERS')
+insert into publishers(
+p_id,p_add,p_name)values(203,'Dhaka','NICKSON PUBLISHERS')
+insert into publishers(
+p_id,p_add,p_name)values(202,'Dhaka','LOYAL PUBLISHERS')
+
+insert into category(
+c_id,c_name)values(322,'ECO')
+insert into category(
+c_id,c_name)values(412,'CIRCUIT')
+insert into category(
+c_id,c_name)values(129,'SCIENCE')
+
+insert into authority(
+a_id,a_name)values(1,'LILLY JEAN')
+insert into authority(
+a_id,a_name)values(2,'TAMANNA ISLAM')
+insert into authority(
+a_id,a_name)values(3,'MD. MASHRUR RAHMAN')
+
+insert into borrowed_by(
+u_id,b_id,r_date,i_date,due_date,fine)values(15308973,981305,'july/22/2016','july/15/2016','july/25/2016',200)
+insert into borrowed_by(
+u_id,b_id,r_date,i_date,due_date,fine)values(15308974,122106,'july/23/2016','july/16/2016','july/26/2016',400)
+insert into borrowed_by(
+u_id,b_id,r_date,i_date,due_date,fine)values(15308975,541236,'july/24/2016','july/17/2016','july/27/2016',1000)
+
+
+
+
+
